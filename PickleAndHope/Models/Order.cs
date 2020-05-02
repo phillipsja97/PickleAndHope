@@ -7,7 +7,7 @@ namespace PickleAndHope.Models
 {
 
     // POST api/orders/
-    // PUT api/orders/{id}/items
+    // PUT api/orders/{id}/
     public class Order
     {
         public int Id { get; set; }
