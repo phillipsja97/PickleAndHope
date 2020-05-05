@@ -21,8 +21,8 @@ namespace PickleAndHope.Controllers
             var existingPickle = _repository.GetByType(pickleToAdd.Type);
             if (existingPickle == null)
             {
-                _repository.Add(pickleToAdd);
-                return Created("", pickleToAdd);
+                var newPickle = _repository.Add(pickleToAdd);
+                return Created("", newPickle);
             }
             else
             {
