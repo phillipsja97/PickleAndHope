@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PickleAndHope.DataAccess;
 
 namespace PickleAndHope
 {
@@ -26,6 +27,15 @@ namespace PickleAndHope
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddCors(options =>
+               options.AddPolicy("ItsAllGood",
+                   builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin())
+             );
+
+            services.AddTransient<PickleRepository>();
+            //services.AddScoped<>();
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +49,8 @@ namespace PickleAndHope
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("ItsAllGood");
 
             app.UseAuthorization();
 

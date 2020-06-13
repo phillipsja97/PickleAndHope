@@ -6,14 +6,19 @@ using System.Threading.Tasks;
 using PickleAndHope.Models;
 using Microsoft.Data.SqlClient;
 using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace PickleAndHope.DataAccess
 {
     public class PickleRepository
     {
 
-        const string ConnectionString = "Server = localhost; Database = PickleAndHope; Trusted_Connection = True;";
+        string ConnectionString;
 
+        public PickleRepository(IConfiguration configuration)
+        {
+            ConnectionString = configuration.GetConnectionString("PickleAndHope");
+        }
         public Pickle Add(Pickle pickle)
         {
             //pickle.Id = _pickles.Max(x => x.Id) + 1;
